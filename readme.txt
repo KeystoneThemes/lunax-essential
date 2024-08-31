@@ -1,11 +1,11 @@
 === Lunax Essential ===
 Contributors: (this should be a list of wordpress.org userid's)
 Donate link: https://keystonethemes.com/
-Tags: tag1, tag2
+Tags: lunax, keystone themes,
 Requires at least: 4.7
-Tested up to: 5.4
-Stable tag: 2.3
-Requires PHP: 7.0
+Tested up to: 6.5
+Stable tag: 2.4
+Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,8 +49,21 @@ Answer to foo bar dilemma.
 
 == Changelog ==
 
+= 2.4 =
+* Compatibility Check
+
+= 2.3 =
+* Stable Release 2
+* Fixed Errors
+
 = 2.1 =
 * CSS Fixed
+
+= 2.0 =
+* Stable Release
+
+= 1.0 =
+* initial Release
 
 == A brief Markdown Example ==
 

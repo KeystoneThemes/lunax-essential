@@ -3,7 +3,7 @@
  * Plugin Name: Lunax Essential
  * Description: Essential plugin for Lunax Theme.
  * Plugin URI:  https://keystonethemes.com/
- * Version:     2.3
+ * Version:     2.4
  * Author:      Keystone Themes
  * Author URI:  https://keystonethemes.com/
  * Text Domain: lunax-essential
