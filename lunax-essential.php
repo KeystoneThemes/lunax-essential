@@ -284,20 +284,36 @@ final class LUNAX_ESSENTIAL_Plugin {
 		printf( '<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message );
 	}
 
-	require 'plugin-update-checker/plugin-update-checker.php';
-			use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+	public function request(){
 
-			$myUpdateChecker = PucFactory::buildUpdateChecker(
-				'https://github.com/KeystoneThemes/lunax-essential/',
-				__FILE__,
-				'lunax-essential'
+		$remote = get_transient( $this->cache_key );
+
+		if( false === $remote || ! $this->cache_allowed ) {
+			$remote = wp_remote_get(
+				'https://keystonethemes.com/wp-json/wdb-plugin/update/info?slug=lunax-essential',
+				array(
+					'timeout' => 60,
+					'headers' => array(
+						'Accept' => 'application/json'
+					)
+				)
 			);
+			if(
+				is_wp_error( $remote )
+				|| 200 !== wp_remote_retrieve_response_code( $remote )
+				|| empty( wp_remote_retrieve_body( $remote ) )
+			) {
+				return false;
+			}
 
-			//Set the branch that contains the stable release.
-			$myUpdateChecker->setBranch('main');
+			set_transient( $this->cache_key, $remote, 12 * HOUR_IN_SECONDS );
+		}
 
-			//Optional: If you're using a private repository, specify the access token like this:
-			$myUpdateChecker->setAuthentication('your-token-here');
+		$remote = json_decode( wp_remote_retrieve_body( $remote ) );
+
+		return $remote;
+
+	}
 
 
 	function info( $res, $action, $args ) {
@@ -405,3 +421,15 @@ if($_theme->exists() && 'lunax' == get_option( 'template' )){
 
 	}
 }
+
+require_once plugin_dir_path(__FILE__) . 'plugin-update-checker/plugin-update-checker.php';
+	use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
+	$myUpdateChecker = PucFactory::buildUpdateChecker(
+	'https://github.com/KeystoneThemes/lunax-essential/',
+	__FILE__,
+	'lunax-essential'
+	);
+
+	//Set the branch that contains the stable release.
+	$myUpdateChecker->setBranch('main');
